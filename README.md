@@ -54,6 +54,8 @@ int main(){
 
 will be executed with `4 "abc"` sent to stdin of the terminal. 
 
+![Demo](images/demo.gif)
+
 ## Known Issues
 VSCode doesn't provide an api to read the language settings yet. Thus, I've used a hack which is not guaranteed to work if your settings are saved in a different location.  
 Issue Link: https://github.com/microsoft/vscode/issues/2871  
@@ -66,4 +68,5 @@ People are invited to help out with code / tests / documentation. Please send PR
   Please ensure that you are using the correct block comment character. Python supports multiline strings with both `"""` and `'''`. The one that is set to block comment character in VSCode's language settings is the one that is used. It defaults to `"""`.
 
 ### Acknowledgement
-A [similar extension](https://packagecontrol.io/packages/Sublime%20Input) exists in sublime-text as well. 
+A [similar extension](https://packagecontrol.io/packages/Sublime%20Input) exists in sublime-text as well.  
+Icon credits: Terminal Icon from [freepik.com](https://www.flaticon.com/authors/freepik) / [flaticon.com](www.flaticon.com). Edited myself via Inkscape.
