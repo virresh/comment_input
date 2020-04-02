@@ -1,0 +1,8 @@
+.DS_Store
+npm-debug.log
+out
+node_modules
+.vscode
+.vscodeignore
+CHANGELOG.md
+vsc-extension-quickstart.md
