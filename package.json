@@ -11,6 +11,14 @@
 		"Programming Languages",
 		"Other"
 	],
+	"keywords": [
+		"c++",
+		"c",
+		"python",
+		"java",
+		"scripting",
+		"competitive programming"
+	],
 	"activationEvents": [
 		"onCommand:cinp.execute",
 		"onCommand:cinp.update"
