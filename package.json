@@ -3,7 +3,7 @@
 	"publisher": "virresh",
 	"displayName": "Comment Input",
 	"description": "Send input to vscode-runner from a source comment!",
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"engines": {
 		"vscode": "^1.35.0"
 	},
@@ -38,7 +38,7 @@
 			},
 			{
 				"command": "cinp.update",
-				"title": "Comment Input: Update Trigger"
+				"title": "Comment Input: Reload Configuration (Also called automatically on configuration update)"
 			}
 		],
 		"configuration": {
@@ -48,6 +48,16 @@
 					"type": "string",
 					"default": "input",
 					"description": "Keyphrase for identifying comment to use as input. Could be regex."
+				},
+				"cinp.language_extension_resources_folder": {
+					"type": "string",
+					"default": null,
+					"description": "Location of Language Resources Folder. Useful only when VSCode installed in non-default location."
+				},
+				"cinp.input_delay": {
+					"type": "number",
+					"default": 500,
+					"description": "Delay between code compilation command and sending input (in milliseconds)."
 				}
 			}
 		}
@@ -73,5 +83,8 @@
 		"typescript": "^3.7.5",
 		"vscode-test": "^1.3.0"
 	},
-	"extensionDependencies": ["formulahendry.code-runner"]
+	"extensionDependencies": [
+		"formulahendry.code-runner"
+	],
+	"dependencies": {}
 }

@@ -4,7 +4,13 @@ import * as fs from 'fs';
 import { EOL } from 'os';
 
 export class CommentInput {
+    private DEFAULT_TRIGGER: string = "input";
+    private DEFAULT_DELAY: number = 500; // in milliseconds
+    private DEFAULT_LANG_CONFIG_PATH = undefined;
+
     private _inputcregex: string = "input";
+    private _inputdelay: number = 500;
+    private _language_configuration_path: string | undefined = undefined;
 
     constructor() {
         this.update_configuration();
@@ -13,6 +19,8 @@ export class CommentInput {
     public update_configuration() {
         let config = vscode.workspace.getConfiguration("cinp");
         this.set_input_regex(config.get("trigger"));
+        this.set_language_configuration_path(config.get("language_extension_resources_folder"));
+        this.set_input_delay(config.get("input_delay"));
     }
 
     public async execute_code() {
@@ -24,7 +32,7 @@ export class CommentInput {
             }
         });
 
-        let success = await vscode.commands.executeCommand("code-runner.run");
+        let success = vscode.commands.executeCommand("code-runner.run");
         if (success !== undefined) {
             console.error(success);
         }
@@ -41,10 +49,15 @@ export class CommentInput {
         let ext: string;
         let custominput: string = "";
         let trigger: string = this._inputcregex;
-        if (fs.existsSync("/usr/share/code/resources/app/extensions")) {
+        if (this._language_configuration_path) {
+            ext = this._language_configuration_path;
+        }
+        else if (fs.existsSync("/usr/share/code/resources/app/extensions")) {
             ext = fs.readFileSync("/usr/share/code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
+        } else if (fs.existsSync("C:///Program Files (x86)/Microsoft VS Code/resources/app/extensions")) {
+            ext = fs.readFileSync("C:///Program Files (x86)/Microsoft VS Code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
         } else {
-            ext = fs.readFileSync("C:///Program Files (x86)/Microsoft VS Code/resources/app/extensions" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
+            ext = fs.readFileSync("C:///Program Files/Microsoft VS Code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
         }
 
         try {
@@ -73,7 +86,13 @@ export class CommentInput {
         let terms = vscode.window.terminals;
         terms.forEach(element => {
             if (element.name === "Code") {
-                element.sendText(custominput, true);
+                setTimeout(() => {
+                    if (element.exitStatus === undefined) {
+                        // check if exitStatus is set or not
+                        // if it's set, then no use of sending input. The compilation must've failed
+                        element.sendText(custominput, true);
+                    }
+                }, this._inputdelay);
             }
         });
     };
@@ -82,6 +101,27 @@ export class CommentInput {
         console.log("Comment Input: Updating trigger to " + inputstr);
         if(inputstr !== undefined){
             this._inputcregex = inputstr;
+        } else {
+            this._inputcregex = this.DEFAULT_TRIGGER;
         }
     };
+
+    private set_language_configuration_path(configpath: string | undefined) {
+        console.log("Comment Input: Updating language config path to " + configpath);
+        if(configpath !== undefined){
+            this._language_configuration_path = configpath;
+        } else {
+            this._language_configuration_path = this.DEFAULT_LANG_CONFIG_PATH;
+        }
+    };
+
+    private set_input_delay(input_delay: number | undefined) {
+        console.log("Comment Input: Updating delay to " + input_delay);
+        if(input_delay !== undefined){
+            this._inputdelay = input_delay;
+        } else {
+            this._inputdelay = this.DEFAULT_DELAY;
+        }
+    };
+
 }

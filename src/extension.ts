@@ -20,8 +20,9 @@ export function activate(context: vscode.ExtensionContext) {
 
 	vscode.workspace.onDidChangeConfiguration((e: vscode.ConfigurationChangeEvent) => {
 		console.log("Comment Input: Detected Config Change.");
-		if(e.affectsConfiguration("cinp.trigger") === true){
-			console.log("Comment Input: Updating input string");
+		if(e.affectsConfiguration("cinp.trigger") === true ||
+			e.affectsConfiguration("cinp.language_extension_resources_folder") ||
+			e.affectsConfiguration("cinp.input_delay")){
 			cinp.update_configuration();
 		}
 	});
