@@ -46,11 +46,21 @@ export class CommentInput {
         // need a hack until 
         // https://github.com/microsoft/vscode/issues/2871
         // is solved
-        let ext: string;
+        let ext: string = "";
         let custominput: string = "";
         let trigger: string = this._inputcregex;
         if (this._language_configuration_path) {
-            ext = this._language_configuration_path;
+            if (fs.existsSync(this._language_configuration_path)) {
+                var config_folder_prefix = this._language_configuration_path;
+                if(!config_folder_prefix.endsWith("/")) {
+                    config_folder_prefix = config_folder_prefix + '/';
+                }
+                ext = fs.readFileSync(config_folder_prefix + editor.document.languageId + "/" + "language-configuration.json", "utf-8");
+            }
+            else {
+                vscode.window.showErrorMessage("Language config folder provided doesn't exist. Cannot determine comment format, not sending anything.");
+                return;
+            }
         }
         else if (fs.existsSync("/usr/share/code/resources/app/extensions")) {
             ext = fs.readFileSync("/usr/share/code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
