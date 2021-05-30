@@ -12,18 +12,23 @@ Aimed at competitive programmers and Data Scientists who spend time debugging sm
 - Uses VSCode's internal comment settings, no need for extra configuration  
 - Uses integrated terminal, so you don't have to switch tabs often  
 - Set custom delay between code compilation and input
+- No configuration required on Windows, MacOS and Linux with default VSCode installation**. 
 
-\* code-runner has some limitations and all those apply to this extension as well.
+\* code-runner has some limitations and all those apply to this extension as well.  
+\*\* For non-default install locations, extension needs to be configured.
 
 ## Requirements
 [code-runner](https://github.com/formulahendry/vscode-code-runner) is required for this extension to work since VSCode doesn't support hijacking terminal input.
 
+Further, if the extension is not installed in default location, please configure `cinp.language_extension_resources_folder`. This is required due to a known issue.
+
+On windows, integrated terminal with cmd is required. Powershell will not work.
 
 ## Extension Settings
 
 * `cinp.trigger`: Set the keyword for comment identification. Default is "input".
 * `cinp.input_delay`: Set the delay between code compilation and input in milliseconds. Default is "500".
-* `cinp.language_extension_resources_folder`: Set the Language Configuration folder. Automatically set on linux and windows to default locations. Configure only if not a default installation.
+* `cinp.language_extension_resources_folder`: Set the Language Configuration folder. Automatically set on linux, mac and windows to default locations. Configure only if not a default installation.
 
 -----------------------------------------------------------------------------------------------------------
 

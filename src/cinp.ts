@@ -63,11 +63,20 @@ export class CommentInput {
             }
         }
         else if (fs.existsSync("/usr/share/code/resources/app/extensions")) {
+            // Linux default location
             ext = fs.readFileSync("/usr/share/code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
+        } else if (fs.existsSync("/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/")) {
+            // MacOS default location
+            ext = fs.readFileSync("/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8")
         } else if (fs.existsSync("C:///Program Files (x86)/Microsoft VS Code/resources/app/extensions")) {
+            // Windows default x86_64 location
             ext = fs.readFileSync("C:///Program Files (x86)/Microsoft VS Code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
+        } else if (fs.existsSync("C:///Program Files/Microsoft VS Code/resources/app/extensions")) {
+            // Windows default x64 location
+            ext = fs.readFileSync("C:///Program Files/Microsoft VS Code/resources/app/extensionsC:///Program Files/Microsoft VS Code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
         } else {
-            ext = fs.readFileSync("C:///Program Files/Microsoft VS Code/resources/app/extensions/" + editor.document.languageId + "/" + "language-configuration.json", "utf8");
+            vscode.window.showErrorMessage("VSCode seems to be installed in non default location. Please configure this extension.");
+            return;
         }
 
         try {
