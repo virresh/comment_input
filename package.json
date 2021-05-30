@@ -3,7 +3,7 @@
 	"publisher": "virresh",
 	"displayName": "Comment Input",
 	"description": "Send input to vscode-runner from a source comment!",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"engines": {
 		"vscode": "^1.35.0"
 	},
