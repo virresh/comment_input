@@ -1,3 +1,5 @@
+![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/virresh.cinp) ![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/virresh.cinp?label=active%20users)
+
 # Comment Input  
 
 Send input to your single-file applications with ease!  
